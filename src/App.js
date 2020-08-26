@@ -8,7 +8,8 @@ function App() {
   return (
     <div>
       <Loading />
-      <Counter />
+      <Counter initialValue={0} />
+      <Counter initialValue={0} title="My Counter" />
     </div>
   );
 }
