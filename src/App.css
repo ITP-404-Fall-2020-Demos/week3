@@ -6,3 +6,7 @@
 .counter button {
   margin: 0 10px;
 }
+
+.text-danger {
+  color: red;
+}
