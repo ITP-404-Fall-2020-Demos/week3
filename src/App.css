@@ -10,3 +10,23 @@
 .text-danger {
   color: red;
 }
+
+.container {
+  display: flex;
+}
+
+main {
+  margin-right: 20px;
+  width: 70%;
+  padding: 20px;
+  text-align: center;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.button-container button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
