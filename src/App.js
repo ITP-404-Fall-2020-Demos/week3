@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchDadJoke } from "./dadJokes";
 import "./App.css";
+import FavoriteDadJokes from "./DadJokes/FavoriteDadJokes";
+import AsyncButton from "./AsyncButton";
 
 function App() {
   const [joke, setJoke] = useState();
@@ -26,7 +28,7 @@ function App() {
   }
 
   function loadDadJoke() {
-    fetchDadJoke().then((joke) => {
+    return fetchDadJoke().then((joke) => {
       setJoke(joke);
       determineIfFavoriteButtonShouldBeDisabled(joke);
     });
@@ -43,9 +45,7 @@ function App() {
         <h1>Dad Jokes</h1>
         <div>{joke}</div>
         <div className="button-container">
-          <button type="button" onClick={loadDadJoke}>
-            Gimme another
-          </button>
+          <AsyncButton onClick={loadDadJoke}>Gimme another</AsyncButton>
           <button
             type="button"
             onClick={addToFavorites}
@@ -56,17 +56,7 @@ function App() {
         </div>
       </main>
       <div>
-        <h3>Favorites</h3>
-
-        {favorites.length > 0 && (
-          <ul>
-            {favorites.map((joke) => {
-              return <li>{joke}</li>;
-            })}
-          </ul>
-        )}
-
-        {favorites.length === 0 && <p>No favorites yet</p>}
+        <FavoriteDadJokes jokes={favorites} />
       </div>
     </div>
   );
