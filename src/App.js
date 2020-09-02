@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { fetchDadJoke } from "./dadJokes";
+import FavoriteDadJokes from "./FavoriteDadJokes";
+import AsyncButton from "./AsyncButton";
 
 function App() {
+  const [joke, setJoke] = useState();
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    fetchDadJoke().then((joke) => {
+      setJoke(joke);
+    });
+  }, []);
+
+  function loadDadJoke() {
+    return fetchDadJoke().then((joke) => {
+      setJoke(joke);
+    });
+  }
+
+  function addToFavorites() {
+    setFavorites(favorites.concat(joke));
+    return Promise.resolve();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>{joke}</div>
+
+      <AsyncButton label={"Gimme another"} onClick={loadDadJoke} />
+
+      <AsyncButton label={"Add to Favorites"} onClick={addToFavorites} />
+
+      <FavoriteDadJokes jokes={favorites} />
+
+      {favorites.length === 0 && <p>No favorites yet</p>}
+    </>
   );
 }
 
